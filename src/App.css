@@ -1,0 +1,103 @@
+/* Limpando as margens e ajustando o fundo para preencher a tela */
+body, html {
+  margin: 0; padding: 0; box-sizing: border-box;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: #020501;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+.background-canvas {
+  position: fixed; inset: 0;
+  display: block; width: 100%; height: 100%;
+  touch-action: none; z-index: 1;
+}
+
+/* --- Estilos do Menu --- */
+#menu-container {
+  position: fixed; top: 20px; right: 20px;
+  z-index: 100; display: flex; flex-direction: column; align-items: flex-end;
+}
+#menu-icon {
+  font-size: 28px; color: #fff; cursor: pointer;
+  background: rgba(255,255,255,0.1); padding: 8px 12px;
+  border-radius: 8px; backdrop-filter: blur(4px); user-select: none;
+}
+#menu-dropdown {
+  display: none; margin-top: 10px;
+}
+#menu-dropdown.show {
+  display: block; animation: fadeIn 0.3s ease;
+}
+#btn-carta {
+  background: #fdf5e6; color: #5b247a; border: none;
+  padding: 10px 20px; border-radius: 8px;
+  font-size: 16px; font-weight: bold; cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+/* --- Estilos da Carta e Modal --- */
+#carta-modal {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7); z-index: 200;
+  justify-content: center; align-items: center;
+  backdrop-filter: blur(3px);
+}
+#carta-modal.show { display: flex; }
+#modal-close {
+  position: absolute; top: 20px; right: 25px;
+  color: #fff; font-size: 32px; cursor: pointer; z-index: 201;
+}
+
+/* Efeito 3D do Papel */
+#carta-wrapper {
+  width: 320px; height: 400px; position: relative;
+  perspective: 1200px; transform: translateY(100px);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+#carta-wrapper.aberta { transform: translateY(0); }
+
+.carta-baixo {
+  position: absolute; bottom: 0; width: 100%; height: 200px;
+  background: #fdf5e6; border-radius: 0 0 8px 8px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+  padding: 20px; padding-top: 10px; box-sizing: border-box;
+}
+.carta-cima {
+  position: absolute; top: 0; width: 100%; height: 200px;
+  transform-origin: bottom; transform: rotateX(180deg);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d; z-index: 2; cursor: pointer;
+}
+#carta-wrapper.aberta .carta-cima {
+  transform: rotateX(0deg); cursor: default;
+}
+
+.face-externa, .face-interna {
+  position: absolute; width: 100%; height: 100%;
+  backface-visibility: hidden; border-radius: 8px 8px 0 0;
+  box-sizing: border-box;
+}
+.face-externa {
+  transform: rotateX(180deg); background: #f4ead5;
+  display: flex; align-items: center; justify-content: center;
+  color: #8b5a2b; font-size: 18px; font-style: italic;
+  border-radius: 0 0 8px 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  border: 1px dashed #dcb98a;
+}
+.face-interna {
+  background: #fdf5e6; padding: 20px; padding-bottom: 10px;
+  border-bottom: 1px solid #f4ead5;
+}
+
+/* Estilo do Texto que você vai escrever */
+.carta-texto {
+  width: 100%; height: 100%; box-sizing: border-box;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 16px; color: #4a2e15; line-height: 1.6;
+  text-align: left; overflow-y: auto;
+}
+.carta-texto::-webkit-scrollbar { width: 4px; }
+.carta-texto::-webkit-scrollbar-thumb { background: #dcb98a; border-radius: 4px; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
